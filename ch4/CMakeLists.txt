@@ -4,9 +4,12 @@ project(useSophus)
 # 为使用 sophus，需要使用find_package命令找到它
 find_package(Sophus REQUIRED)
 
+find_package(fmt REQUIRED)
+set(FMT_LIBRARIES fmt::fmt)
+
 # Eigen
 include_directories("/usr/include/eigen3")
 add_executable(useSophus useSophus.cpp)
-target_link_libraries(useSophus Sophus::Sophus)
+target_link_libraries(useSophus Sophus::Sophus ${FMT_LIBRARIES}  fmt)
 
 add_subdirectory(example)
