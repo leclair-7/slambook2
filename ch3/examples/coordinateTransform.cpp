@@ -15,7 +15,12 @@ int main(int argc, char** argv) {
   Vector3d p1(0.5, 0, 0.2);
 
   Isometry3d T1w(q1), T2w(q2);
+  
+  cout << "T1w: " << T1w.matrix() << endl;
   T1w.pretranslate(t1);
+  cout << "T1w: " << T1w.matrix() << endl << endl;
+
+  
   T2w.pretranslate(t2);
 
   Vector3d p2 = T2w * T1w.inverse() * p1;
