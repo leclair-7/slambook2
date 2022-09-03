@@ -29,41 +29,41 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  // 遍历图像, 请注意以下遍历方式亦可使用于随机像素访问
-  // 使用 std::chrono 来给算法计时
+  // check the pixels
   chrono::steady_clock::time_point t1 = chrono::steady_clock::now();
   for (size_t y = 0; y < image.rows; y++) {
-    // 用cv::Mat::ptr获得图像的行指针
-    unsigned char *row_ptr = image.ptr<unsigned char>(y);  // row_ptr是第y行的头指针
+    // use cv::Mat::ptr to get the pointer of each row
+    unsigned char *row_ptr = image.ptr<unsigned char>(y);  // row_ptr points to the yth row
     for (size_t x = 0; x < image.cols; x++) {
-      // 访问位于 x,y 处的像素
-      unsigned char *data_ptr = &row_ptr[x * image.channels()]; // data_ptr 指向待访问的像素数据
-      // 输出该像素的每个通道,如果是灰度图就只有一个通道
+      // read the pixel on (x,y), x=column, y=row
+      unsigned char *data_ptr = &row_ptr[x * image.channels()]; // data_ptr is the pointer to (x,y)
       for (int c = 0; c != image.channels(); c++) {
-        unsigned char data = data_ptr[c]; // data为I(x,y)第c个通道的值
+        unsigned char data = data_ptr[c]; // data should be pixel of I(x,y) in c−th channel
       }
     }
   }
   chrono::steady_clock::time_point t2 = chrono::steady_clock::now();
   chrono::duration<double> time_used = chrono::duration_cast < chrono::duration < double >> (t2 - t1);
-  cout << "遍历图像用时：" << time_used.count() << " 秒。" << endl;
+  cout << "time used：" << time_used.count() << " seconds。" << endl;
 
-  // 关于 cv::Mat 的拷贝
-  // 直接赋值并不会拷贝数据
+  // copying cv::Mat
+  // operator = will not copy the image data, but only the reference
   cv::Mat image_another = image;
-  // 修改 image_another 会导致 image 发生变化
-  image_another(cv::Rect(0, 0, 100, 100)).setTo(0); // 将左上角100*100的块置零
+  // changing image_another will also change image
+  image_another(cv::Rect(0, 0, 100, 100)).setTo(0); // set top−left 100∗100 block to to 0
   cv::imshow("image", image);
   cv::waitKey(0);
 
-  // 使用clone函数来拷贝数据
+  // use cv::Mat::clone to actually clone the data
   cv::Mat image_clone = image.clone();
   image_clone(cv::Rect(0, 0, 100, 100)).setTo(255);
   cv::imshow("image", image);
   cv::imshow("image_clone", image_clone);
   cv::waitKey(0);
 
-  // 对于图像还有很多基本的操作,如剪切,旋转,缩放等,限于篇幅就不一一介绍了,请参看OpenCV官方文档查询每个函数的调用方法.
+  // We are not going to copy the OpenCV's documentation here
+  // please take a look at it for other image operations like clipping, rotating and
+  // scaling.
   cv::destroyAllWindows();
   return 0;
 }
