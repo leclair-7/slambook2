@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   }
 
   // print some basic information
-  cout << "cols " << image.cols << ", rows" << image.rows << ", channels" << image.channels() << endl;
+  cout << "cols " << image.cols << ", rows " << image.rows << ", channels " << image.channels() << endl;
   cv::imshow("image", image);      
   cv::waitKey(0);                  // display and wait for a keyboard input
 
@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
   }
   chrono::steady_clock::time_point t2 = chrono::steady_clock::now();
   chrono::duration<double> time_used = chrono::duration_cast < chrono::duration < double >> (t2 - t1);
-  cout << "time used：" << time_used.count() << " seconds。" << endl;
+  cout << "time used：" << time_used.count() << " seconds " << endl;
 
   // copying cv::Mat
   // operator = will not copy the image data, but only the reference
