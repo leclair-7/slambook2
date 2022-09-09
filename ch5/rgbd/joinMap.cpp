@@ -10,7 +10,7 @@ using namespace std;
 typedef vector<Sophus::SE3d, Eigen::aligned_allocator<Sophus::SE3d>> TrajectoryType;
 typedef Eigen::Matrix<double, 6, 1> Vector6d;
 
-// 在pangolin中画图，已写好，无需调整
+// pangolin
 void showPointCloud(
     const vector<Vector6d, Eigen::aligned_allocator<Vector6d>> &pointcloud);
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 
     ifstream fin("/home/leclair/lair/robots/slambook2/ch5/rgbd/pose.txt");
     if (!fin) {
-        cerr << "请在有pose.txt的目录下运行此程序" << endl;
+        cerr << "unable to find pose.txt file" << endl;
         return 1;
     }
 
